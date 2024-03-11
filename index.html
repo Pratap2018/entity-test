@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random API Caller with Authorization</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+    <label for="token">Authorization Token:</label>
+    <input type="text" id="token" placeholder="Enter your token">
+
+    <button onclick="fetchRandomData()">Fetch Random Data</button>
+    <div id="result"></div>
+
+    <script>
+        function fetchRandomData() {
+
+            const apiUrl = 'https://ent-c4e7c9d.api.entity.hypersign.id/api/v1/did?page=1&limit=10';
+            const authToken = document.getElementById('token').value;
+
+            // Set up the Axios request with headers
+            axios.get(apiUrl, {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                }
+            })
+                .then(response => {
+                    document.getElementById('result').innerText = JSON.stringify(response.data, null, 2);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+    </script>
+
+</body>
+
+</html>
